@@ -1,5 +1,9 @@
 # รายงานสรุปแลป IA : Nemesis (1.0.1)
 
+> เวอร์ชัน README.md สำหรับใช้อ่าน/เปิดบน GitHub หรือ VS Code  
+> เนื้อหาอิงจากไฟล์รายงาน .docx (เวอร์ชันเน้นคำสั่ง) และเพิ่มส่วนคำสั่งให้ copy ใช้งานได้ง่าย
+
+---
 
 ## 1. บทนำ
 
@@ -62,9 +66,10 @@ nmap -sn 88.88.88.0/24
 สมมติว่าเจอ Nemesis อยู่ที่ `88.88.88.5`:
 
 ```bash
-nmap -sV -A 88.88.88.5
+nmap -sS -sV -A 88.88.88.5
 ```
 
+- `-sS` ใช้ TCP SYN scan (half-open) เพื่อสแกนพอร์ตเปิดอย่างรวดเร็วและค่อนข้าง stealthy
 - `-sV` ตรวจเวอร์ชัน service เช่น Apache, OpenSSH
 - `-A` ทำ OS detection, script scanning, traceroute
 - ผลลัพธ์ที่สนใจ:
@@ -381,7 +386,7 @@ cat root.txt
 |--------|---------------|-----------------|
 | `ip a` | สำรวจเครือข่าย | ดู interface และ IP address ของ Kali |
 | `nmap -sn 88.88.88.0/24` | สแกนเครือข่าย | ค้นหา host ที่ออนไลน์ในวง 88.88.88.0/24 |
-| `nmap -sV -A 88.88.88.5` | สแกนพอร์ต | หาพอร์ตเปิด + เวอร์ชันบริการ + ข้อมูล OS ของ Nemesis |
+| `nmap -sS -sV -A 88.88.88.5` | สแกนพอร์ต | หาพอร์ตเปิด + เวอร์ชันบริการ + ข้อมูล OS ของ Nemesis |
 | payload `../../../etc/passwd` | ทดสอบ LFI | ตรวจว่าเว็บสามารถอ่านไฟล์ระบบผ่าน input ของผู้ใช้ได้หรือไม่ |
 | payload `../../../../home/thanos/.ssh/id_rsa` | ขโมย SSH key | ใช้ LFI อ่าน SSH private key ของผู้ใช้ thanos |
 | `nano id_rsa` | เตรียม SSH key | สร้างไฟล์ key ใน Kali และวางเนื้อหา private key ลงไป |
